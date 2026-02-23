@@ -2,7 +2,6 @@
 
 :root {
   color-scheme: light;
-
   --background: #fdfdfd;
   --text: #111111;
   --primary: #e63946;
@@ -11,7 +10,6 @@
 
 .dark {
   color-scheme: dark;
-
   --background: #1a1a1a;
   --text: #f1f1f1;
   --primary: #ff6b6b;
