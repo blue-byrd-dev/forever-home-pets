@@ -27,7 +27,7 @@ export default function PrivacyPage() {
 					Last updated: {LAST_UPDATED}
 				</p>
 
-				<div className="mt-8 space-y-6 text-sm leading-relaxed text-zinc-600">
+				<div className="mt-8 space-y-6 text-sm leading-relaxed text-zinc-200">
 					<Section title="Overview">
 						Forever Home is an adoption-first platform currently in development.
 						This Privacy Policy explains what information we collect, how we use

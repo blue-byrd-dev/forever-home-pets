@@ -29,7 +29,7 @@ export default function StatusPage() {
 
 				<div className="mt-8 space-y-4">
 					<Section title="Now">
-						<ul className="list-disc pl-5 text-zinc-300">
+						<ul className="list-disc pl-5 text-(--text)">
 							<li>Project scaffolding and deployment baseline</li>
 							<li>
 								Rescue data integration onboarding (awaiting access credentials)
@@ -39,7 +39,7 @@ export default function StatusPage() {
 					</Section>
 
 					<Section title="Next">
-						<ul className="list-disc pl-5 text-zinc-300">
+						<ul className="list-disc pl-5 text-(--text)">
 							<li>Auth + profiles</li>
 							<li>Pet search + filters</li>
 							<li>Organization profiles</li>
@@ -47,7 +47,7 @@ export default function StatusPage() {
 					</Section>
 
 					<Section title="Later">
-						<ul className="list-disc pl-5 text-zinc-300">
+						<ul className="list-disc pl-5 text-(--text)">
 							<li>Favorites + saved searches</li>
 							<li>Inquiry/contact workflow</li>
 							<li>Safety + verification enhancements</li>

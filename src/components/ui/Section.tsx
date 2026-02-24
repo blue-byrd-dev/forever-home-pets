@@ -25,7 +25,7 @@ export default function Section({
 			)}
 
 			<div
-				className={title ? "mt-3 text-sm leading-relaxed text-zinc-300" : ""}
+				className={title ? "mt-3 text-sm leading-relaxed text-(--text)" : ""}
 			>
 				{children}
 			</div>

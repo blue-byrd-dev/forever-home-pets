@@ -27,7 +27,7 @@ export default function TermsPage() {
 					Last updated: {LAST_UPDATED}
 				</p>
 
-				<div className="mt-8 space-y-6 text-sm leading-relaxed text-zinc-600">
+				<div className="mt-8 space-y-6 text-sm leading-relaxed text-zinc-800">
 					<Section title="Overview">
 						These Terms govern your access to and use of Forever Home (the
 						“Service”). By using the Service, you agree to these Terms.

@@ -1,5 +1,5 @@
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase/client";
+import { clientDb } from "@/lib/firebase/client";
 
 export async function upsertUserProfile(params: {
   uid: string;
@@ -7,7 +7,7 @@ export async function upsertUserProfile(params: {
   displayName: string | null;
   photoURL: string | null;
 }) {
-  const ref = doc(db, "users", params.uid);
+  const ref = doc(clientDb, "users", params.uid);
 
   await setDoc(
     ref,
