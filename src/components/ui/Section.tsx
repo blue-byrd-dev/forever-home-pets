@@ -15,17 +15,17 @@ export default function Section({
 	return (
 		<section
 			className={[
-				"rounded-3xl border border-zinc-200/60 bg-white/60 p-6",
-				"dark:border-zinc-800/60 dark:bg-white/5",
+				"rounded-3xl border border-zinc-200/60 bg-white/20 p-6",
+				"dark:border-zinc-800/60 dark:bg-white/60",
 				className,
 			].join(" ")}
 		>
 			{title && (
-				<h2 className="text-lg font-semibold text-(--accent)">{title}</h2>
+				<h2 className="text-lg font-semibold text-(--primary)">{title}</h2>
 			)}
 
 			<div
-				className={title ? "mt-3 text-sm leading-relaxed text-zinc-600" : ""}
+				className={title ? "mt-3 text-sm leading-relaxed text-zinc-300" : ""}
 			>
 				{children}
 			</div>

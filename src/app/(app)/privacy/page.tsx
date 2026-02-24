@@ -103,7 +103,7 @@ export default function PrivacyPage() {
 						Email:{" "}
 						<a
 							className="font-medium underline underline-offset-4 hover:opacity-80"
-							style={{ color: "var(--accent)" }}
+							style={{ color: "var(--primary)" }}
 							href="mailto:k.byrd@bluebyrddevelopment.com?subject=Privacy%20Request"
 						>
 							k.byrd@bluebyrddevelopment.com

@@ -99,7 +99,7 @@ export default function TermsPage() {
 						Email:{" "}
 						<a
 							className="font-medium underline underline-offset-4 hover:opacity-80"
-							style={{ color: "var(--accent)" }}
+							style={{ color: "var(--primary)" }}
 							href="mailto:k.byrd@bluebyrddevelopment.com?subject=Terms%20Question"
 						>
 							k.byrd@bluebyrddevelopment.com

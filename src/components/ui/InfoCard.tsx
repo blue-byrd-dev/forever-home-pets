@@ -18,7 +18,7 @@ export default function InfoCard({
 				className,
 			].join(" ")}
 		>
-			<div className="text-sm font-semibold text-(--text)">{title}</div>
+			<div className="text-sm font-semibold text-(--primary)">{title}</div>
 			<div className="mt-1 text-sm leading-relaxed text-zinc-600">{body}</div>
 		</div>
 	);

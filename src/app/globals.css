@@ -3,17 +3,17 @@
 :root {
   color-scheme: light;
   --background: #fdfdfd;
-  --text: #111111;
-  --primary: #e63946;
-  --accent: #1d3557;
+  --text: #121417;
+  --primary: #e46b48;
+  --accent: #7fb0c8;
 }
 
 .dark {
   color-scheme: dark;
-  --background: #1a1a1a;
+  --background: #121417;
   --text: #f1f1f1;
-  --primary: #ff6b6b;
-  --accent: #a8dadc;
+  --primary: #ff8a63;
+  --accent: #9fd0e4;
 }
 
 @theme {
