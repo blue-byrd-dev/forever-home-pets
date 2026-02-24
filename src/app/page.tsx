@@ -1,7 +1,10 @@
+import DebugAuth from "@/components/DebugAuth"
+
 export default function Home() {
 	return (
 		<main className="min-h-screen grid place-items-center p-8">
 			<div className="max-w-lg w-full rounded-2xl border p-6 shadow-sm">
+				<DebugAuth />
 				<h1 className="text-3xl font-bold">Forever Home</h1>
 				<p className="mt-2 text-sm opacity-80">
 					Next.js + TypeScript + Tailwind v4 is alive.

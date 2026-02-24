@@ -1,5 +1,7 @@
 import "./globals.css";
-import ThemeProvider from "@/components/provider/ThemeProvider";
+
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export default function RootLayout({
 	children,
@@ -9,7 +11,9 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body>
-				<ThemeProvider>{children}</ThemeProvider>
+				<ThemeProvider>
+					<AuthProvider>{children}</AuthProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
