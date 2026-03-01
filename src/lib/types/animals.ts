@@ -12,6 +12,11 @@ export type Animal = {
   state: string | null;
   rescueId: string | null;
   createdAt: string | null;
+
+  shelterName: string | null;
+  shelterPhone: string | null;
+  shelterEmail: string | null;
+  shelterUrl: string | null;
 };
 
 export type AnimalsApiResponse =

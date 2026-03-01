@@ -2,23 +2,43 @@
 
 :root {
   color-scheme: light;
+
   --background: #fdfdfd;
+  --surface: #ffffff;
+  --muted: #f3f4f6;
+  --border: #e5e7eb;
+
   --text: #121417;
+  --text-muted: #6b7280;
+
   --primary: #e46b48;
   --accent: #7fb0c8;
 }
 
 .dark {
   color-scheme: dark;
+
   --background: #121417;
+  --surface: #1a1d21;
+  --muted: #24282d;
+  --border: #2f343a;
+
   --text: #f1f1f1;
+  --text-muted: #9ca3af;
+
   --primary: #ff8a63;
   --accent: #9fd0e4;
 }
 
 @theme {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
   --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+
   --color-primary: var(--primary);
   --color-accent: var(--accent);
 }

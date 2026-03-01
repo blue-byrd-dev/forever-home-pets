@@ -62,10 +62,13 @@ export async function getAnimals(query: AnimalsQuery): Promise<AnimalsResult> {
 
   const cacheKey = buildCacheKey({ postal, species, limit });
 
+  console.log("[getAnimals] start", { postal, species, limit, fresh, cacheKey });
+
   // 1) Cache read
   if (CACHE_ENABLED && !fresh) {
     const cached = await getAnimalsCache(cacheKey);
     if (cached) {
+      console.log("[getAnimals] cache hit", { cacheKey, count: cached.animals.length });
       return {
         animals: cached.animals,
         source: "cache",
@@ -80,16 +83,22 @@ export async function getAnimals(query: AnimalsQuery): Promise<AnimalsResult> {
         },
       };
     }
+    console.log("[getAnimals] cache miss", { cacheKey });
+  } else {
+    console.log("[getAnimals] cache bypassed", { CACHE_ENABLED, fresh });
   }
 
   // 2) Live fetch → normalize
+  console.log("[getAnimals] calling RescueGroups…");
   const rgResponse = await fetchAnimalsFromRescueGroups({
     location: postal ?? undefined,
     species: species ?? undefined,
     limit,
   });
+  console.log("[getAnimals] RescueGroups response received");
 
   const animals = normalizeAnimals(rgResponse);
+  console.log("[getAnimals] normalized animals", { count: animals.length });
 
   // 3) Cache write (best-effort)
   if (CACHE_ENABLED) {
@@ -103,6 +112,8 @@ export async function getAnimals(query: AnimalsQuery): Promise<AnimalsResult> {
       params: { postal, species, limit },
       animals,
     });
+
+    console.log("[getAnimals] cache write complete", { cacheKey });
   }
 
   return {
