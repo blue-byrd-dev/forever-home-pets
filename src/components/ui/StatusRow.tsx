@@ -1,4 +1,3 @@
-// src/components/ui/StatusRow.tsx
 type StatusRowProps = {
 	label: string;
 	value: string;
@@ -20,7 +19,7 @@ export default function StatusRow({
 			].join(" ")}
 		>
 			<div className="text-sm text-zinc-600">{label}</div>
-			<div className="text-xs font-semibold text-(--text)">{value}</div>
+			<div className="text-xs font-semibold text-text">{value}</div>
 		</div>
 	);
 }

@@ -1,4 +1,3 @@
-// src/components/ui/Section.tsx
 import { ReactNode } from "react";
 
 type SectionProps = {
@@ -21,11 +20,11 @@ export default function Section({
 			].join(" ")}
 		>
 			{title && (
-				<h2 className="text-lg font-semibold text-(--primary)">{title}</h2>
+				<h2 className="text-lg font-semibold text-primary">{title}</h2>
 			)}
 
 			<div
-				className={title ? "mt-3 text-sm leading-relaxed text-(--text)" : ""}
+				className={title ? "mt-3 text-sm leading-relaxed text-text" : ""}
 			>
 				{children}
 			</div>

@@ -1,10 +1,11 @@
-// src/app/(app)/animals/page.tsx
 import type { Animal } from "@/lib/types/animals";
 import AnimalSearchForm from "@/components/animals/AnimalsSearchForm";
 import ResultsState from "@/components/animals/ResultsState";
 import AnimalGrid from "@/components/animals/AnimalGrid";
 import { getAnimals } from "@/lib/data/animal.service";
 import type { AnimalsResult } from "@/lib/data/animal.service";
+import { getServerUser } from "@/lib/auth/server";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -31,7 +32,6 @@ async function fetchAnimals(searchParams: SearchParams): Promise<UiResult> {
 					)
 				: undefined;
 
-		console.log("[AnimalsPage] fetching animals…");
 		const data = await getAnimals({ postal, species, limit });
 
 		return { ok: true, animals: data.animals, data };
@@ -48,9 +48,9 @@ async function fetchAnimals(searchParams: SearchParams): Promise<UiResult> {
 export default async function AnimalsPage({
 	searchParams,
 }: {
-	searchParams: Promise<SearchParams>;
+	searchParams?: SearchParams;
 }) {
-	const sp = await searchParams;
+	const sp = searchParams ?? {};
 
 	const postal = (sp.postal ?? "").trim();
 	const species = (sp.species ?? "Dog").trim();
@@ -59,7 +59,14 @@ export default async function AnimalsPage({
 		Math.max(1, Number.parseInt(sp.limit ?? "24", 10) || 24),
 	);
 
-	const result = await fetchAnimals({ postal, species, limit: String(limit) });
+  const nextUrl = `/animals?postal=${encodeURIComponent(postal)}&species=${encodeURIComponent(species)}&limit=${limit}`;
+
+	const user = await getServerUser();
+	const isAuthed = !!user;
+
+	const result = isAuthed
+		? await fetchAnimals({ postal, species, limit: String(limit) })
+		: null;
 
 	return (
 		<main className="mx-auto w-full max-w-6xl px-4 py-8">
@@ -81,20 +88,47 @@ export default async function AnimalsPage({
 			</section>
 
 			<section className="mt-8">
-				<ResultsState
-					status={
-						result.ok
-							? result.animals.length > 0
-								? "ready"
-								: "empty"
-							: "error"
-					}
-					errorMessage={result.ok ? undefined : result.error}
-					postal={postal}
-					species={species}
-				>
-					<AnimalGrid animals={result.animals} />
-				</ResultsState>
+				{isAuthed && result ? (
+					<ResultsState
+						status={
+							result.ok
+								? result.animals.length > 0
+									? "ready"
+									: "empty"
+								: "error"
+						}
+						errorMessage={result.ok ? undefined : result.error}
+						postal={postal}
+						species={species}
+					>
+						<AnimalGrid animals={result.animals} />
+					</ResultsState>
+				) : (
+					<div className="rounded-2xl border border-border bg-surface p-8 text-center">
+						<h2 className="text-lg font-semibold">Search is members-only</h2>
+
+						<p className="mt-2 text-sm text-text-muted">
+							Create a free account to search adoptable pets near you, save
+							favorites, and track the pets you love.
+						</p>
+
+						<div className="mt-6 flex flex-wrap justify-center gap-4">
+							<Link
+								href={`/sign-in?next=${encodeURIComponent(nextUrl)}`}
+								className="rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
+							>
+								Sign In
+							</Link>
+
+							<Link
+								href={`/sign-up?next=${encodeURIComponent(nextUrl)}`}
+								className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-surface"
+							>
+								Create Free Account
+							</Link>
+						</div>
+					</div>
+				)}
 			</section>
 		</main>
 	);

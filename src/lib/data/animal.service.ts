@@ -68,7 +68,7 @@ export async function getAnimals(query: AnimalsQuery): Promise<AnimalsResult> {
   if (CACHE_ENABLED && !fresh) {
     const cached = await getAnimalsCache(cacheKey);
     if (cached) {
-      console.log("[getAnimals] cache hit", { cacheKey, count: cached.animals.length });
+     
       return {
         animals: cached.animals,
         source: "cache",
@@ -98,7 +98,6 @@ export async function getAnimals(query: AnimalsQuery): Promise<AnimalsResult> {
   console.log("[getAnimals] RescueGroups response received");
 
   const animals = normalizeAnimals(rgResponse);
-  console.log("[getAnimals] normalized animals", { count: animals.length });
 
   // 3) Cache write (best-effort)
   if (CACHE_ENABLED) {

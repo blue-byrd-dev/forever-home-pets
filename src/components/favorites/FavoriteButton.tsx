@@ -21,13 +21,16 @@ export default function FavoriteButton({ petId, snapshot, className }: Props) {
 	const { user, isFavorited, toggle } = useFavorites();
 	const liked = isFavorited(petId);
 
-	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const iconColor = liked ? "text-[color:var(--primary)]" : "text-[color:var(--accent)]";
+	const iconColor = liked ? "text-primary" : "text-accent";
+
+	const [localLiked, setLocalLiked] = useState<boolean | null>(null);
+
+	const effectiveLiked = localLiked ?? liked;
 
 	async function onClick(e: React.MouseEvent<HTMLButtonElement>) {
-		// If your card becomes clickable later, this prevents the heart click
+		// If card becomes clickable later, this prevents the heart click
 		// from triggering the card click.
 		e.stopPropagation();
 
@@ -38,24 +41,20 @@ export default function FavoriteButton({ petId, snapshot, className }: Props) {
 			return;
 		}
 
+		setLocalLiked(!liked);
+
 		try {
-			setBusy(true);
 			await toggle(petId, snapshot);
-		} catch (err: unknown) {
-			setError(
-				err instanceof Error ? err.message : "Failed to update favorite.",
-			);
 		} finally {
-			setBusy(false);
+			setLocalLiked(null);
 		}
-	}
+		}
 
 	return (
 		<div className={className}>
 			<button
 				type="button"
 				onClick={onClick}
-				disabled={busy}
 				aria-pressed={liked}
 				aria-label={liked ? "Remove from favorites" : "Add to favorites"}
 				className={[
@@ -64,10 +63,13 @@ export default function FavoriteButton({ petId, snapshot, className }: Props) {
 					"transition hover:bg-muted active:scale-95",
 					"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
 					"disabled:opacity-60",
+					liked
+						? "text-primary scale-110"
+						: "text-accent scale-100",
 					iconColor,
 				].join(" ")}
 			>
-				{liked ? (
+				{effectiveLiked ? (
 					<HeartFilledIcon className="h-5 w-5" />
 				) : (
 					<HeartOutlineIcon className="h-5 w-5" />

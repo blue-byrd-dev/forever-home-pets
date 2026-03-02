@@ -1,65 +1,67 @@
-import { requireSession } from "@/lib/auth/session";
-import { adminDb } from "@/lib/firebase/admin";
+"use client";
 
-type Snapshot = {
-	id: string;
-	name: string;
-	primaryPhoto: string | null;
-	species: string;
-	breed: string | null;
-	age: string | null;
-	sex: string | null;
-	city: string | null;
-	state: string | null;
-	shelterName: string | null;
+import { useFavorites } from "@/lib/favorites/FavoritesContext";
+import FavoriteButton from "@/components/favorites/FavoriteButton";
+
+type Snap = {
+	name?: string;
+	primaryPhoto?: string | null;
+	breed?: string | null;
+	age?: string | null;
+	sex?: string | null;
+	city?: string | null;
+	state?: string | null;
 };
 
-type FavoriteDoc = {
-	snapshot?: Snapshot;
-};
+export default function FavoritesPage() {
+	const { user, loading, items } = useFavorites();
 
-export default async function FavoritesPage() {
-	const { uid } = await requireSession();
+	if (loading) {
+		return <div className="p-6 text-sm opacity-70">Loading favorites…</div>;
+	}
 
-	const snap = await adminDb
-		.collection("users")
-		.doc(uid)
-		.collection("favorites")
-		.orderBy("createdAt", "desc")
-		.limit(100)
-		.get();
-
-	const favorites = snap.docs.map((doc) => ({
-		id: doc.id,
-		...(doc.data() as FavoriteDoc),
-	}));
+	if (!user) {
+		return (
+			<div className="p-6">
+				<h1 className="text-xl font-semibold">Your Favorites</h1>
+				<p className="mt-4 text-sm opacity-70">
+					Please sign in to view favorites.
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="p-6">
 			<h1 className="text-xl font-semibold">Your Favorites</h1>
 
-			{favorites.length === 0 ? (
+			{items.length === 0 ? (
 				<p className="mt-4 text-sm opacity-70">
 					You haven’t saved any pets yet.
 				</p>
 			) : (
 				<div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-					{favorites.map((f) => {
-						const animal = f.snapshot;
-						if (!animal) return null;
+					{items.map((f) => {
+						const a = (f.snapshot ?? {}) as Snap;
 
 						return (
 							<article
 								key={f.id}
 								className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm"
 							>
-								<div className="aspect-4/3 w-full bg-muted">
-									{animal.primaryPhoto ? (
+								<div className="relative aspect-4/3 w-full bg-muted">
+									<div className="absolute right-3 top-3 z-10">
+										{/* Clicking this heart removes the favorite and the card disappears */}
+										<FavoriteButton petId={f.id} snapshot={f.snapshot} />
+									</div>
+
+									{a.primaryPhoto ? (
 										// eslint-disable-next-line @next/next/no-img-element
 										<img
-											src={animal.primaryPhoto}
-											alt={`Photo of ${animal.name}`}
+											src={a.primaryPhoto}
+											alt={a.name ? `Photo of ${a.name}` : "Favorite pet"}
 											className="h-full w-full object-cover"
+											loading="lazy"
 										/>
 									) : (
 										<div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
@@ -69,14 +71,16 @@ export default async function FavoritesPage() {
 								</div>
 
 								<div className="p-4">
-									<h3 className="text-lg font-semibold">{animal.name}</h3>
+									<h3 className="text-lg font-semibold">
+										{a.name ?? "Unnamed pet"}
+									</h3>
 									<p className="mt-1 text-sm text-muted-foreground">
-										{[animal.breed, animal.age, animal.sex]
-											.filter(Boolean)
-											.join(" • ")}
+										{[a.breed, a.age, a.sex].filter(Boolean).join(" • ") ||
+											"Details pending"}
 									</p>
 									<p className="mt-2 text-sm">
-										{[animal.city, animal.state].filter(Boolean).join(", ")}
+										{[a.city, a.state].filter(Boolean).join(", ") ||
+											"Location unavailable"}
 									</p>
 								</div>
 							</article>

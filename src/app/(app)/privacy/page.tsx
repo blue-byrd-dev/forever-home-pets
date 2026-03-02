@@ -1,4 +1,3 @@
-// src/app/privacy/page.tsx
 import Link from "next/link";
 import Section from "@/components/ui/Section";
 

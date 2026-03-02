@@ -1,4 +1,3 @@
-// src/app/terms/page.tsx
 import Link from "next/link";
 import Section from "@/components/ui/Section";
 
