@@ -1,4 +1,4 @@
-// src/components/animals/AnimalGrid.tsx
+
 import type { Animal } from "@/lib/types/animals";
 import AnimalCard from "@/components/animals/AnimalCard";
 

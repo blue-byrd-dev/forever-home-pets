@@ -1,16 +1,16 @@
+import { requireSession } from "@/lib/auth/session";
+import LogoutButton from "@/components/auth/LogoutButton";
+import FavoriteButton from "@/components/favorites/FavoriteButton";
 
+export default async function AccountPage() {
+	const { uid } = await requireSession();
 
-export const metadata = {
-	title: "Account — Forever Home",
-};
-
-export default function AccountPage() {
 	return (
-		<main className="min-h-screen bg-(--background) text-(--text)">
-			<div className="mx-auto w-full max-w-3xl px-6 py-12">
-				<h1 className="text-3xl font-semibold tracking-tight">Account</h1>
-				<p className="mt-2 text-zinc-600">This area is under construction.</p>
-			</div>
-		</main>
+		<div className="p-6">
+			<h1 className="text-xl font-semibold">Account</h1>
+			<p className="mt-2 text-sm opacity-80">UID: {uid}</p>
+			<FavoriteButton petId={uid} />
+			<LogoutButton />
+		</div>
 	);
 }

@@ -1,5 +1,7 @@
-// src/components/animals/AnimalCard.tsx
+"use client";
+
 import type { Animal } from "@/lib/types/animals";
+import FavoriteButton from "@/components/favorites/FavoriteButton";
 
 function formatMeta(animal: Animal) {
 	const parts = [animal.breed, animal.age, animal.sex].filter(
@@ -21,12 +23,30 @@ function formatLocation(animal: Animal, searchedPostal?: string) {
 export default function AnimalCard({ animal }: { animal: Animal }) {
 	const meta = formatMeta(animal);
 	const location = formatLocation(animal);
+	const petId = animal.id;
+	const snapshot = {
+		name: animal.name,
+		primaryPhoto: animal.primaryPhoto ?? null,
+		species: animal.species ?? null,
+		breed: animal.breed ?? null,
+		age: animal.age ?? null,
+		sex: animal.sex ?? null,
+		city: animal.city ?? null,
+		state: animal.state ?? null,
+		rescueId: animal.rescueId ?? null,
+		shelterName: animal.shelterName ?? null,
+	};
 
 	return (
 		<article className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition hover:shadow-md">
-			<div className="aspect-4/3 w-full bg-muted">
+			{/* Image + heart overlay */}
+			<div className="relative aspect-4/3 w-full bg-muted">
+				{/* Heart in top-right */}
+				<div className="absolute right-3 top-3 z-10">
+					<FavoriteButton petId={petId} snapshot={snapshot} />
+				</div>
+
 				{animal.primaryPhoto ? (
-					// Using <img> is fine for external images; switch to next/image later if you want
 					// eslint-disable-next-line @next/next/no-img-element
 					<img
 						src={animal.primaryPhoto}

@@ -1,4 +1,3 @@
-// src/components/animals/AnimalSearchForm.tsx
 "use client";
 
 import { useMemo, useState, useTransition } from "react";

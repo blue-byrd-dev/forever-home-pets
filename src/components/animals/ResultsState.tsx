@@ -1,4 +1,3 @@
-// src/components/animals/ResultsState.tsx
 import type { ReactNode } from "react";
 
 type Status = "loading" | "empty" | "error" | "ready";
